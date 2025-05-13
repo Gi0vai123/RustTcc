@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mel00n - Receitas</title>
-  <link rel="stylesheet" href="CSS/csshome.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mel00n - Receitas</title>
+    <link rel="stylesheet" href="CSS/csshome.css" />
+    <link rel="stylesheet" href="CSS/drop.css">
 </head>
 <body>
     <section id="conteudo">
@@ -14,11 +15,17 @@
         <header>
             <nav>
                 <div id="navbar">
-                    <a href="pag-receita.html">Receitas</a>
-                    <span>|</span>
-                    <a href="home-r.html">Início</a>
-                    <span>|</span>
-                    <a href="favoritos.html" class="ativo">Favoritos</a>
+                <a href="pag-receita.html">Receitas</a>
+                <span>|</span>
+                <a href="home-r.html">Início</a>
+                <span>|</span>
+                <a href="favoritos.html" class="ativo">Favoritos</a>
+                <div class="dropdown" id="menuDropdown">
+                    <button class="dropdown-btn" onclick="toggleDropdown()"></button>
+                    <div class="dropdown-content">
+                        <a href="pag-ingredientes.html">ingredientes</a>
+                    </div>
+                </div>
                 </div>
             </nav>
         </header>
@@ -39,6 +46,6 @@
             <img src="img/sacola2.png" alt="" srcset="" width="800px" >
         </div>
     </section>
-    
+    <script src="js-pages/dropdawn.js"></script>
 </body>
 </html>
