@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif; 
+    
+}
+
+html, body {
+    height: 100%;
+  }
+
+body {
+    background-color: #fff0BD;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: #C7DB9C;
+    width: 220px;
+    padding: 20px;
+    height: 100%;
+}
+
+.sidebar h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+input{
+    background-color: #fff0BD;
+    border: 1px solid black;
+    padding: 15px;
+    width: 650px;
+    border-radius: 30px;
+    display: block;
+    margin: 0 auto;
+}
+
+.search-box {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #aaa;
+    outline: none;
+    width: 400px;
+    height: 40px;
+}
+
+.historico {
+    margin-top: 20px;
+}
+.historico {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+  
+.quadrado {
+    width: 770px;
+    height: 700px;
+    background-color: #fdf1cf;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.botoes button {
+    background-color: #C7DB9C;
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 100px;
+    cursor: pointer;
+}
+
+button{
+    background-color: #C7DB9C;
+    border: 1px solid black;
+    cursor: pointer;
+    padding: 5px;
+    width: 179px;
+    height: 35px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.button button:hover{
+    background-color: #D7E5B9;
+}
