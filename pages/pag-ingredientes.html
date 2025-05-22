@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mel00N</title>
-  <link rel="stylesheet" href="CSS/ingreientes.css" />
-  <link rel="stylesheet" href="CSS/drop.css">
+  <link rel="stylesheet" href="CSS/ingredientes.css">
+  <link rel=" stylesheet" href="CSS/drop.css">
   <link rel="stylesheet" href="CSS/barrapesquisa.css">
 </head>
+
 <body>
   <div class="container">
     <aside class="sidebar">
-      <h3>Ingredientes Adicionados</h3>
-      <ul class="ingredientes-lista">
-        <li>Farinha <button>✖</button></li>
-        <li>Ovo <button>✖</button></li>
-        <li>Óleo <button>✖</button></li>
-        <li>Leite <button>✖</button></li>
-        <li>Morango <button>✖</button></li>
-        <li>Queijo <button>✖</button></li>
-        <li>Limão <button>✖</button></li>
-        <li>Açúcar <button>✖</button></li>
-        <li>Maracujá <button>✖</button></li>
-      </ul>
+      <div>
+        <h3>Ingredientes Adicionados</h3>
+        <ul class="ingredientes-lista">
+          <li>Farinha <button>✖</button></li>
+          <li>Ovo <button>✖</button></li>
+          <li>Óleo <button>✖</button></li>
+          <li>Leite <button>✖</button></li>
+          <li>Morango <button>✖</button></li>
+          <li>Queijo <button>✖</button></li>
+          <li>Limão <button>✖</button></li>
+          <li>Açúcar <button>✖</button></li>
+          <li>Maracujá <button>✖</button></li>
+        </ul>
+      </div>
+      <div id="gerar">
+        <div class="gen" style="    margin-top: 150px;">
+          <button>Gerar Receita</button>
+        </div>
+      </div>
+
     </aside>
 
     <main class="main-content">
       <header class="topbar">
         <nav>
-            <div id="navbar">
-              <a href="pag-receita.html">Receitas</a>
-              <span>|</span>
-              <a href="home-r.html">Início</a>
-              <span>|</span>
-              <a href="favoritos.html" class="ativo">Favoritos</a>
-              <div class="dropdown" id="menuDropdown">
-                <button class="dropdown-btn" onclick="toggleDropdown()"></button>
-                <div class="dropdown-content">
-                  <a href="pag-ingredientes.html">ingredientes</a>
-                </div>
+          <div id="navbar">
+            <a href="pag-receita.html">Receitas</a>
+            <span>|</span>
+            <a href="home-r.html">Início</a>
+            <span>|</span>
+            <a href="favoritos.html" class="ativo">Favoritos</a>
+            <div class="dropdown" id="menuDropdown">
+              <button class="dropdown-btn" onclick="toggleDropdown()"></button>
+              <div class="dropdown-content">
+                <a href="pag-ingredientes.html">ingredientes</a>
               </div>
             </div>
+          </div>
         </nav>
         <div class="search-container">
           <svg viewBox="0 0 24 24">
@@ -50,7 +60,7 @@
                     L20.49 19l-4.99-5zm-6 0C8.01 
                     14 6 11.99 6 9.5S8.01 5 
                     10.5 5 15 7.01 15 9.5 
-                    12.99 14 10.5 14z"/>
+                    12.99 14 10.5 14z" />
           </svg>
 
           <input type="search" name="pesquisa" placeholder="Pesquisar" required>
@@ -87,8 +97,13 @@
           </div>
         </div>
       </section>
+      <div class="gen" style="    margin-top: 240px;">
+        <button>Selecionar Foto</button>
+      </div>
     </main>
   </div>
-    <script src="js-pages/dropdown.js"></script>
+
+  <script src="js-pages/dropdown.js"></script>
 </body>
+
 </html>

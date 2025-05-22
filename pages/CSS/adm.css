@@ -2,13 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif; 
-    
+    font-family: sans-serif;
+
 }
 
-html, body {
+html,
+body {
     height: 100%;
-  }
+}
 
 body {
     background-color: #fff0BD;
@@ -37,7 +38,7 @@ body {
     padding: 20px;
 }
 
-input{
+input {
     background-color: #fff0BD;
     border: 1px solid black;
     padding: 15px;
@@ -59,15 +60,16 @@ input{
 .historico {
     margin-top: 20px;
 }
+
 .historico {
     display: flex;
     gap: 20px;
     padding: 20px;
 }
-  
+
 .quadrado {
-    width: 770px;
-    height: 700px;
+    width: 370px;
+    height: 500px;
     background-color: #fdf1cf;
     border: 1px solid black;
     border-radius: 10px;
@@ -84,7 +86,7 @@ input{
     cursor: pointer;
 }
 
-button{
+button {
     background-color: #C7DB9C;
     border: 1px solid black;
     cursor: pointer;
@@ -96,6 +98,6 @@ button{
     display: block;
 }
 
-.button button:hover{
+.button button:hover {
     background-color: #D7E5B9;
 }

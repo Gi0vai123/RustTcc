@@ -5,9 +5,10 @@
     font-family: sans-serif;
 }
 
-html, body {
+html,
+body {
     height: 100%;
-  }
+}
 
 body {
     background-color: #fff0BD;
@@ -20,9 +21,10 @@ body {
 
 .sidebar {
     background-color: #b9d49f;
-    width: 205px;
+    width: 220px;
     padding: 20px;
     height: 100%;
+
 }
 
 .sidebar h3 {
@@ -67,7 +69,7 @@ nav a {
     font-weight: bold;
 }
 
-#navbar{
+#navbar {
     padding: 10px;
     border-radius: 8px;
     background-color: #ff3366;
@@ -108,21 +110,50 @@ nav a {
 
 .botoes button {
     background-color: #b9d49f;
-    border: none;
+    border-color: 0.5px black;
     padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
 }
 
-.ingredientes-lista button{
+.ingredientes-lista button {
     background-color: #d4e6c0;
-    border: 0px;
+    border: none;
     cursor: pointer;
     padding: 5px;
     border-radius: 8px;
 }
 
-.ingredientes-lista button:hover{
+.ingredientes-lista button:hover {
     background-color: red;
+    border: 1px black;
 }
-  
+
+.gen {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    background-color: #ff3366;
+    border: 1px solid black;
+    width: 179px;
+    border-radius: 8px;
+}
+
+.gen button {
+    background-color: #ff3366;
+    border: none;
+    color: white;
+}
+
+.gen:hover {
+    background-color: #d82854;
+}
+
+.gen:hover button {
+    background-color: #d82854;
+}
+
+#gerar {
+    display: flex;
+
+}
