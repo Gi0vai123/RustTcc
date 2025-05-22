@@ -10,23 +10,111 @@
     <div class="container">
         <img src="img/meloon.png" alt="Logo Meloon" class="logo" width="130">
 
-        <form action="#" method="post">
-            <input type="email" name="email" placeholder="E-mail" required>
-            <input type="senha" name="senha" placeholder="Senha" required>
+        <form id="loginForm" action="#" method="post">
+            <input type="email" id="email" name="email" placeholder="E-mail" required>
+            <input type="password" id="password" name="senha" placeholder="Senha" required>
             <button type="submit">Enviar</button>
         </form>
 
         <a>Esqueceu sua senha?</a>
-        <p>Não tem uma conta? Inscrever-se no <strong>Meloon</strong></p>   
+        <p>Não tem uma conta? <a href="cadastro.html"><strong>Inscrever-se no Meloon</strong></a></p>
 
-        <button type="logo google">
-            <img src="img/goog.png" alt="Google" width="30">Continuar com o Google
-        </button>
-
-        <button class="logo facebook">
-            <img src="img/facebook.png" alt="Facebook" width="30">Continuar com o Facebook
-        </button>
 
     </div>
+    <script>    
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const submitButton = event.submitter || document.querySelector('#loginForm button[type="submit"]');
+        const originalButtonText = submitButton ? submitButton.textContent : "Enviar";
+
+
+        if (submitButton) {
+            submitButton.textContent = 'Enviando...';
+            submitButton.disabled = true;
+        }
+        displayMessage('', 'clear');
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/login', { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password}),
+                credentials: 'include'
+            });
+            if (response.ok) {
+                console.log("Requisição de login bem-sucedida, resposta final OK.");
+                console.log("URL Final (após potencial redirecionamento):", response.url);
+                console.log("Foi redirecionado pelo servidor:", response.redirected);
+                window.location.href = response.url;
+
+            } else {
+                let errorMessage = "Email ou senha incorretos.";
+                try {
+                    const data = await response.json();
+                    errorMessage = data.message || errorMessage;
+                } catch (e) {
+                    errorMessage = `Erro: ${response.status} - ${response.statusText}`;
+                    if (response.status === 401) errorMessage = "Email ou senha incorretos.";
+                }
+                displayMessage(errorMessage, 'error');
+                if (submitButton) {
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
+            }
+        } catch (error) {
+            console.error('Erro no fetch:', error);
+            displayMessage('Erro ao conectar com o servidor. Tente novamente.', 'error');
+            if (submitButton) {
+                submitButton.textContent = originalButtonText;
+                submitButton.disabled = false;
+            }
+        }
+    });
+
+    function displayMessage(message, type = 'info') {
+        const container = document.querySelector('.container');
+        let messageDiv = container.querySelector('.login-message');
+
+        if (type === 'clear') {
+            if (messageDiv) messageDiv.remove();
+            return;
+        }
+
+        if (!messageDiv) {
+            messageDiv = document.createElement('div');
+            messageDiv.className = 'login-message';
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm && loginForm.nextSibling) {
+                 loginForm.parentNode.insertBefore(messageDiv, loginForm.nextSibling);
+            } else if (loginForm) {
+                 loginForm.parentNode.appendChild(messageDiv);
+            } else {
+                container.appendChild(messageDiv);
+            }
+        }
+
+        messageDiv.textContent = message;
+        messageDiv.className = 'login-message';
+        if (type === 'error') {
+            messageDiv.classList.add('error');
+        } else if (type === 'success') {
+            messageDiv.classList.add('success');
+        }
+
+        if (type !== 'error') {
+            setTimeout(() => {
+                if (messageDiv && messageDiv.parentNode) {
+                    if(messageDiv.textContent === message) messageDiv.remove();
+                }
+            }, 7000);
+        }
+    }
+   </script>
 </body>
 </html>

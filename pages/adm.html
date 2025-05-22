@@ -11,11 +11,9 @@
     <aside class="sidebar">
       <h3>Administrador</h3>
       <ul class="button">
-        <button>Listar usuários</button>
-        <button>Histórico de receitas</button>
-        <button>Guia de outros dispositivos</button>
-        <button>Excluir dados</button>
-
+        <button id="btn-usuarios">Listar usuários</button>
+        <button id="btn-receitas">Histórico de receitas</button>
+        <button id="btn-excluir">Excluir dados</button>
       </ul>
     </aside>
 
@@ -25,14 +23,63 @@
       </header>
 
       <section class="historico">
-        <div class="quadrado">
-
-        </div>
-        
+        <div class="quadrado" id="conteudo">
+          <!-- Conteúdo será exibido aqui -->
         </div>
       </section>
     </main>
-
   </div>
+
+  <script>
+    const btnUsuarios = document.getElementById('btn-usuarios');
+    const btnReceitas = document.getElementById('btn-receitas');
+    const conteudo = document.getElementById('conteudo');
+
+    btnUsuarios.addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/list_users',{credentials:"include"});
+        if (!response.ok) throw new Error('Erro ao buscar usuários');
+        const usuarios = await response.json();
+
+        conteudo.innerHTML = '<h2>Usuários Cadastrados</h2>';
+        usuarios.forEach(user => {
+          const div = document.createElement('div');
+          div.innerHTML = `
+            <p><strong>ID:</strong> ${user.id}</p>
+            <p><strong>Nome:</strong> ${user.name}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+            <p><strong>Administrador:</strong> ${user.role ? 'Sim' : 'Não'}</p>
+            <hr/>
+          `;
+          conteudo.appendChild(div);
+        });
+      } catch (error) {
+        conteudo.innerHTML = '<p style="color:red;">Erro ao carregar usuários</p>';
+      }
+    });
+
+    btnReceitas.addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/todas_receitas',{credentials:"include"});
+        if (!response.ok) throw new Error('Erro ao buscar receitas');
+        const receitas = await response.json();
+
+        conteudo.innerHTML = '<h2>Histórico de Receitas</h2>';
+        receitas.forEach(rec => {
+          const div = document.createElement('div');
+          div.innerHTML = `
+            <p><strong>ID:</strong> ${rec.id}</p>
+            <p><strong>Título:</strong> ${rec.title}</p>
+            <p><strong>Ingredientes:</strong> ${Array.isArray(rec.ingredients) ? rec.ingredients.join(', ') : rec.ingredients}</p>
+            <p><strong>Instruções:</strong> ${rec.instructions}</p>
+            <hr/>
+          `;
+          conteudo.appendChild(div);
+        });
+      } catch (error) {
+        conteudo.innerHTML = '<p style="color:red;">Erro ao carregar receitas</p>';
+      }
+    });
+  </script>
 </body>
 </html>
