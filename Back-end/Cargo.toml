@@ -1,0 +1,20 @@
+[package]
+name = "back_end_final_v1"
+version = "0.1.0"
+edition = "2024"
+
+
+[dependencies]
+rocket = { version = "0.5.0", features = ["json", "secrets"] }
+async-trait = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+base64 = "0.21.7"
+dotenvy = "0.15"
+sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-rustls"] }
+argon2 = "0.5"
+rand = "0.8"
+rand_core = "0.6.4"
+
