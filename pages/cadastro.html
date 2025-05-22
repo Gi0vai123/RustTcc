@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Meloon</title>
+    <link rel="stylesheet" href="CSS/pag.css"> 
+</head>
+<body>
+    <div class="container">
+        <img src="img/meloon.png" alt="Logo Meloon" class="logo" width="130">
+
+        <form id="cadastro-form">
+            <input type="text" name="name" placeholder="Nome completo" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <input type="password" name="confirmarSenha" placeholder="Confirmar senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <p>Já tem uma conta? <a href="login.html">Entrar no <strong>Meloon</strong></a></p>
+    </div>
+
+    <script>
+        const form = document.getElementById('cadastro-form');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const confirmarSenha = formData.get('confirmarSenha');
+
+            if (password !== confirmarSenha) {
+                alert("As senhas não coincidem.");
+                return;
+            }
+
+            const urlEncoded = new URLSearchParams({
+                name,
+                email,
+                password
+            });
+
+            try {
+                const response = await fetch('http://localhost:8000/cadastro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: urlEncoded.toString()
+                });
+
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    const text = await response.text();
+                    alert('Erro no cadastro: ' + text);
+                }
+            } catch (err) {
+                alert("Erro ao enviar o formulário: " + err);
+            }
+        });
+    </script>
+</body>
+</html>
