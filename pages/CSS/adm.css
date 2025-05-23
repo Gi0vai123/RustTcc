@@ -18,14 +18,17 @@ body {
 .container {
     display: flex;
     gap: 20px;
-    height: 100vh;
+    min-height: 100vh; /* Alterado para min-height para acompanhar o conteúdo */
 }
 
 .sidebar {
     background-color: #C7DB9C;
     width: 220px;
     padding: 20px;
-    height: 100%;
+    /* height: 100%; Removido para permitir o crescimento */
+    display: flex;
+    flex-direction: column; /* Organiza os botões verticalmente */
+    align-items: flex-start; /* Alinha os botões à esquerda */
 }
 
 .sidebar h3 {
@@ -59,23 +62,25 @@ input {
 
 .historico {
     margin-top: 20px;
-}
-
-.historico {
     display: flex;
     gap: 20px;
     padding: 20px;
+    flex-direction: column; /* Garante que o quadrado cresça verticalmente */
+    align-items: center; /* Centraliza o quadrado horizontalmente */
 }
 
 .quadrado {
-    width: 370px;
-    height: 500px;
+    /* width: 370px; Removido para permitir o crescimento horizontal se necessário */
+    height: auto; /* Alterado para auto para acompanhar o conteúdo */
     background-color: #fdf1cf;
     border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
     display: block;
     margin: 0 auto;
+    overflow-y: auto; /* Adiciona barra de rolagem vertical quando o conteúdo exceder */
+    width: 100%; /* Ocupa a largura total da seção histórico */
+    max-width: 700px; /* Define uma largura máxima para evitar que fique muito largo */
 }
 
 .botoes button {
@@ -91,11 +96,12 @@ button {
     border: 1px solid black;
     cursor: pointer;
     padding: 5px;
-    width: 179px;
+    width: 100%; /* Faz os botões acompanharem a largura da sidebar */
     height: 35px;
     border-radius: 8px;
     margin-bottom: 8px;
     display: block;
+    text-align: left; /* Alinha o texto dos botões à esquerda para melhor leitura */
 }
 
 .button button:hover {
