@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Favoritos - Receitas</title>
@@ -30,7 +31,7 @@
 <script>
   async function carregarFavoritos() {
     try {
-      const response = await fetch('http://127.0.0.1:8000/curtidas',{credentials:"include"});
+      const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
       if (!response.ok) {
         throw new Error('Erro ao buscar favoritos');
       }
@@ -55,6 +56,7 @@
 
   window.addEventListener('DOMContentLoaded', carregarFavoritos);
 </script>
+
 <body>
   <div class="barra-lateral"></div>
   <div class="barra-lateral">
@@ -65,51 +67,70 @@
     <header>
       <div>
         <nav>
-            <div id="navbar">
-              <a href="pag-receita.html">Receitas</a>
-              <span>|</span>
-              <a href="home-r.html">Início</a>
-              <span>|</span>
-              <a href="favoritos.html" class="ativo">Favoritos</a>
-              <div class="dropdown" id="menuDropdown">
-                <button class="dropdown-btn" onclick="toggleDropdown()"></button>
-                <div class="dropdown-content">
-                  <a href="pag-ingredientes.html">ingredientes</a>
-                </div>
+          <div id="navbar">
+            <a href="pag-receita.html">Receitas</a>
+            <span>|</span>
+            <a href="home-r.html">Início</a>
+            <span>|</span>
+            <a href="favoritos.html" class="ativo">Favoritos</a>
+            <div class="dropdown" id="menuDropdown">
+              <button class="dropdown-btn" onclick="toggleDropdown()"></button>
+              <div class="dropdown-content">
+                <a href="pag-ingredientes.html">ingredientes</a>
               </div>
             </div>
+          </div>
         </nav>
       </div>
-      
-        <div class="search-container">
-          <svg viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 
+
+      <div class="search-container">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 
                     6.5 6.5 0 109.5 16c1.61 0 3.09-.59 
                     4.23-1.57l.27.28v.79l5 4.99 
                     L20.49 19l-4.99-5zm-6 0C8.01 
                     14 6 11.99 6 9.5S8.01 5 
                     10.5 5 15 7.01 15 9.5 
-                    12.99 14 10.5 14z"/>
-          </svg>
+                    12.99 14 10.5 14z" />
+        </svg>
 
-          <input type="search" name="pesquisa" placeholder="Pesquisar" required>
-        </div>
+        <input type="search" name="pesquisa" placeholder="Pesquisar" required>
+      </div>
     </header>
 
     <main>
       <ul class="lista">
-        <li><span class="estrela">★</span> <strong>Coxinha</strong> <p>Coloque a água, o leite, a margarina, o caldo e o sal em uma panela e misture até ferver...</p></li>
-        <li><span class="estrela">★</span> <strong>Esfiha de Carne</strong> <p>Misturar o leite (de morno à temperatura ambiente), o açúcar, os ovos e o fermento. Ag...</p></li>
-        <li><span class="estrela">★</span> <strong>Bolo de Fubá</strong> <p>Bata todos os ingredientes no liquidificador. Coloque em uma forma untada e enfarinha...</p></li>
-        <li><span class="estrela">★</span> <strong>Torta de Limão</strong> <p>Triture o biscoito de maisena em um liquidificador ou processador. Junte a margarina e f...</p></li>
-        <li><span class="estrela">★</span> <strong>Pudim de Pão</strong> <p>Misture todos os ingredientes no liquidificador e bata bem. Reserve. Em uma forma própr...</p></li>
-        <li><span class="estrela">★</span> <strong>Suco de Banana</strong> <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite (o...</p></li>
-        <li><span class="estrela">★</span> <strong>Torta de Frango</strong> <p>Cozinhe o peito de frango no caldo até ficar macio. Separe 1 xícara (chá) de caldo do cozi...</p></li>
-        <li><span class="estrela">★</span> <strong>Pavê de Brigadeiro</strong> <p>Colocar todos os ingredientes na panela e levar ao fogo, mexendo sempre, até engrossar...</p></li>
-        <li><span class="estrela">★</span> <strong>Risoto de Camarão</strong> <p>Adicione em uma panela grande com tampa, o azeite, a manteiga, o alho e o arroz. Mex...</p></li>
+        <li><span class="estrela">★</span> <strong>Coxinha</strong>
+          <p>Coloque a água, o leite, a margarina, o caldo e o sal em uma panela e misture até ferver...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Esfiha de Carne</strong>
+          <p>Misturar o leite (de morno à temperatura ambiente), o açúcar, os ovos e o fermento. Ag...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Bolo de Fubá</strong>
+          <p>Bata todos os ingredientes no liquidificador. Coloque em uma forma untada e enfarinha...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Torta de Limão</strong>
+          <p>Triture o biscoito de maisena em um liquidificador ou processador. Junte a margarina e f...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Pudim de Pão</strong>
+          <p>Misture todos os ingredientes no liquidificador e bata bem. Reserve. Em uma forma própr...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Suco de Banana</strong>
+          <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite (o...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Torta de Frango</strong>
+          <p>Cozinhe o peito de frango no caldo até ficar macio. Separe 1 xícara (chá) de caldo do cozi...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Pavê de Brigadeiro</strong>
+          <p>Colocar todos os ingredientes na panela e levar ao fogo, mexendo sempre, até engrossar...</p>
+        </li>
+        <li><span class="estrela">★</span> <strong>Risoto de Camarão</strong>
+          <p>Adicione em uma panela grande com tampa, o azeite, a manteiga, o alho e o arroz. Mex...</p>
+        </li>
       </ul>
     </main>
   </div>
 </body>
 <script src="js-pages/dropdown.js"></script>
+
 </html>

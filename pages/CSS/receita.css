@@ -29,12 +29,18 @@ body {
 }
 
 .sidebar h3 {
+    display: flex;
     font-size: 17px;
     margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .ingredientes-lista {
     list-style: none;
+    display: flex;
+    justify-content: center;
+    background-color: #C7DB9C;
 }
 
 .ingredientes-lista li {
@@ -99,9 +105,11 @@ input {
     display: flex;
     gap: 20px;
     padding: 20px;
+    justify-content: center;
+    align-items: center;
     padding-left: 150px;
     padding-right: 150px;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 .sugestao-ingredientes,

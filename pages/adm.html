@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administrador</title>
   <link rel="stylesheet" href="CSS/adm.css" />
 </head>
+
 <body>
   <div class="container">
     <aside class="sidebar">
@@ -37,7 +39,7 @@
 
     btnUsuarios.addEventListener('click', async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/list_users',{credentials:"include"});
+        const response = await fetch('http://127.0.0.1:8000/list_users', { credentials: "include" });
         if (!response.ok) throw new Error('Erro ao buscar usuários');
         const usuarios = await response.json();
 
@@ -60,7 +62,7 @@
 
     btnReceitas.addEventListener('click', async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/todas_receitas',{credentials:"include"});
+        const response = await fetch('http://127.0.0.1:8000/todas_receitas', { credentials: "include" });
         if (!response.ok) throw new Error('Erro ao buscar receitas');
         const receitas = await response.json();
 
@@ -82,4 +84,5 @@
     });
   </script>
 </body>
+
 </html>

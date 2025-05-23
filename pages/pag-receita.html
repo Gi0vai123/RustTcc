@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -64,12 +65,13 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <aside class="sidebar">
             <h3>Receitas</h3>
             <ul class="ingredientes-lista receitas-lista-sidebar" id="lista-receitas-sidebar">
-                </ul>
+            </ul>
         </aside>
 
         <main class="main-content">
@@ -97,7 +99,7 @@
                                     L20.49 19l-4.99-5zm-6 0C8.01
                                     14 6 11.99 6 9.5S8.01 5
                                     10.5 5 15 7.01 15 9.5
-                                    12.99 14 10.5 14z"/>
+                                    12.99 14 10.5 14z" />
                     </svg>
                     <input type="search" name="pesquisa" placeholder="Pesquisar" required>
                 </div>
@@ -106,7 +108,7 @@
             <section class="sugestoes">
                 <h2>Lista de Receitas</h2>
                 <div id="lista-receitas-principal">
-                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -159,37 +161,37 @@
 
                     // Exibir todas as receitas principais
                     receitas.forEach(receita => {
-                    const receitaItem = document.createElement('div');
-                    receitaItem.classList.add('receita-item');
+                        const receitaItem = document.createElement('div');
+                        receitaItem.classList.add('receita-item');
 
-                    const titulo = document.createElement('h3');
-                    titulo.textContent = receita.title;
+                        const titulo = document.createElement('h3');
+                        titulo.textContent = receita.title;
 
-                    const ingredientes = document.createElement('p');
+                        const ingredientes = document.createElement('p');
 
-                    let ingredientesTexto;
-                    try {
-                        const ingredientesArray = JSON.parse(receita.ingredients);
-                        ingredientesTexto = Array.isArray(ingredientesArray) ? ingredientesArray.join(', ') : receita.ingredients;
-                    } catch {
-                        ingredientesTexto = receita.ingredients;
-                    }
-                    ingredientes.textContent = `Ingredientes: ${ingredientesTexto}`;
+                        let ingredientesTexto;
+                        try {
+                            const ingredientesArray = JSON.parse(receita.ingredients);
+                            ingredientesTexto = Array.isArray(ingredientesArray) ? ingredientesArray.join(', ') : receita.ingredients;
+                        } catch {
+                            ingredientesTexto = receita.ingredients;
+                        }
+                        ingredientes.textContent = `Ingredientes: ${ingredientesTexto}`;
 
-                    const instrucoes = document.createElement('p');
-                    instrucoes.textContent = `Instruções: ${receita.instructions.substring(0, 150)}...`;
+                        const instrucoes = document.createElement('p');
+                        instrucoes.textContent = `Instruções: ${receita.instructions.substring(0, 150)}...`;
 
-                    const botaoFavoritar = document.createElement('button');
-                    botaoFavoritar.classList.add('adicionar-favorito');
-                    botaoFavoritar.textContent = 'Adicionar aos Favoritos';
-                    botaoFavoritar.addEventListener('click', () => adicionarAosFavoritos(receita.id));
+                        const botaoFavoritar = document.createElement('button');
+                        botaoFavoritar.classList.add('adicionar-favorito');
+                        botaoFavoritar.textContent = 'Adicionar aos Favoritos';
+                        botaoFavoritar.addEventListener('click', () => adicionarAosFavoritos(receita.id));
 
-                    receitaItem.appendChild(titulo);
-                    receitaItem.appendChild(ingredientes);
-                    receitaItem.appendChild(instrucoes);
-                    receitaItem.appendChild(botaoFavoritar);
-                    listaReceitasPrincipal.appendChild(receitaItem);
-                });
+                        receitaItem.appendChild(titulo);
+                        receitaItem.appendChild(ingredientes);
+                        receitaItem.appendChild(instrucoes);
+                        receitaItem.appendChild(botaoFavoritar);
+                        listaReceitasPrincipal.appendChild(receitaItem);
+                    });
 
                 } else {
                     const mensagem = document.createElement('p');
@@ -205,7 +207,7 @@
         async function adicionarAosFavoritos(receitaId) {
             try {
                 const response = await fetch('http://127.0.0.1:8000/curtir', {
-                    credentials:"include",
+                    credentials: "include",
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -237,4 +239,5 @@
         window.onload = carregarReceitas;
     </script>
 </body>
+
 </html>
