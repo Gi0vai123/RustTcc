@@ -1,183 +1,179 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Receitas</title>
-    <link rel="stylesheet" href="CSS/receita.css" />
-    <link rel="stylesheet" href="CSS/drop.css">
-    <link rel="stylesheet" href="CSS/barrapesquisa.css">
-    <style>
-        .receitas-lista-sidebar p {
-            text-align: center;
-            color: #ccc;
-            margin: 10px 0;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Receitas</title>
+  <link rel="stylesheet" href="CSS/receita.css" />
+  <link rel="stylesheet" href="CSS/drop.css" />
+  <link rel="stylesheet" href="CSS/barrapesquisa.css" />
 </head>
 
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <h3>Receitas</h3>
-            <ul class="ingredientes-lista receitas-lista-sidebar" id="lista-receitas-sidebar">
-            </ul>
-        </aside>
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Receitas</h3>
+      <ul class="ingredientes-lista receitas-lista-sidebar" id="lista-receitas-sidebar"></ul>
+    </aside>
 
-        <main class="main-content">
-            <header class="topbar">
-                <nav>
-                    <div id="navbar">
-                        <a href="pag-receita.html">Receitas</a>
-                        <span>|</span>
-                        <a href="home.html">Início</a>
-                        <span>|</span>
-                        <a href="favoritos.html" class="ativo">Favoritos</a>
-                        <span>|</span>
-                        <a href="pag-ingredientes.html">ingredientes</a>
-                        <div class="dropdown" id="menuDropdown">
+    <main class="main-content">
+      <header class="topbar">
+        <nav>
+          <div id="navbar">
+            <a href="pag-receita.html">Receitas</a>
+            <span>|</span>
+            <a href="home.html">Início</a>
+            <span>|</span>
+            <a href="favoritos.html" class="ativo">Favoritos</a>
+            <span>|</span>
+            <a href="pag-ingredientes.html">Ingredientes</a>
+            <div class="dropdown" id="menuDropdown">
+              <div class="dropdown-content"></div>
+            </div>
+          </div>
+        </nav>
+      </header>
 
-                            <div class="dropdown-content">
+      <section class="sugestoes">
+        <h2>Lista de Receitas</h2>
+        <div id="lista-receitas-principal"></div>
+      </section>
+    </main>
+  </div>
 
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </header>
+  <script src="js-pages/dropdown.js"></script>
+  <script>
+    async function carregarReceitas() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/minhas_receitas', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include'
+        });
 
-            <section class="sugestoes">
-                <h2>Lista de Receitas</h2>
-                <div id="lista-receitas-principal">
-                </div>
-            </section>
-        </main>
-    </div>
-    <script src="js-pages/dropdown.js"></script>
-    <script>
-        async function carregarReceitas() {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/minhas_receitas', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
+        if (!response.ok) {
+          console.error(`Erro ao buscar receitas: ${response.status}`);
+          return;
+        }
 
-                if (!response.ok) {
-                    console.error(`Erro ao buscar receitas: ${response.status}`);
-                    return;
-                }
+        const receitas = await response.json();
+        const listaReceitasPrincipal = document.getElementById('lista-receitas-principal');
+        const listaReceitasSidebar = document.getElementById('lista-receitas-sidebar');
+        listaReceitasPrincipal.innerHTML = '';
+        listaReceitasSidebar.innerHTML = '';
 
-                const receitas = await response.json();
-                const listaReceitasPrincipal = document.getElementById('lista-receitas-principal');
-                const listaReceitasSidebar = document.getElementById('lista-receitas-sidebar');
-
-                listaReceitasPrincipal.innerHTML = ''; // Limpa o conteúdo anterior
-                listaReceitasSidebar.innerHTML = ''; // Limpa o conteúdo anterior da sidebar
-
-                if (receitas && receitas.length > 0) {
-                    // Exibir as primeiras receitas na sidebar
-                    const primeirasReceitasSidebar = receitas.slice(0, 4);
-                    primeirasReceitasSidebar.forEach(receita => {
-                        const botaoReceita = document.createElement('button');
-                        botaoReceita.textContent = receita.title;
-                        botaoReceita.addEventListener('click', () => exibirDetalhesReceita(receita));
-                        listaReceitasSidebar.appendChild(botaoReceita);
-                    });
-
-                    const separador = document.createElement('p');
-                    separador.textContent = '________';
-                    listaReceitasSidebar.appendChild(separador);
-
-                    const espaco = document.createElement('p');
-                    espaco.innerHTML = '&nbsp;';
-                    listaReceitasSidebar.appendChild(espaco);
-
-                    const botaoMaisReceitas = document.createElement('button');
-                    botaoMaisReceitas.textContent = '+ Receitas';
-                    // Adicionar lógica para carregar mais receitas ou navegar para outra página
-                    listaReceitasSidebar.appendChild(botaoMaisReceitas);
-
-                    // Exibir todas as receitas principais
-                    receitas.forEach(receita => {
-                        const receitaItem = document.createElement('div');
-                        receitaItem.classList.add('receita-item');
-
-                        const titulo = document.createElement('h3');
-                        titulo.textContent = receita.title;
-
-                        const ingredientes = document.createElement('p');
-
-                        let ingredientesTexto;
-                        try {
-                            const ingredientesArray = JSON.parse(receita.ingredients);
-                            ingredientesTexto = Array.isArray(ingredientesArray) ? ingredientesArray.join(', ') : receita.ingredients;
-                        } catch {
-                            ingredientesTexto = receita.ingredients;
-                        }
-                        ingredientes.textContent = `Ingredientes: ${ingredientesTexto}`;
-
-                        const instrucoes = document.createElement('p');
-                        instrucoes.textContent = `Instruções: ${receita.instructions.substring(0, 150)}...`;
-
-                        const botaoFavoritar = document.createElement('button');
-                        botaoFavoritar.classList.add('adicionar-favorito');
-                        botaoFavoritar.textContent = 'Adicionar aos Favoritos';
-                        botaoFavoritar.addEventListener('click', () => adicionarAosFavoritos(receita.id));
-
-                        receitaItem.appendChild(titulo);
-                        receitaItem.appendChild(ingredientes);
-                        receitaItem.appendChild(instrucoes);
-                        receitaItem.appendChild(botaoFavoritar);
-                        listaReceitasPrincipal.appendChild(receitaItem);
-                    });
-
-                } else {
-                    const mensagem = document.createElement('p');
-                    mensagem.textContent = 'Nenhuma receita encontrada.';
-                    listaReceitasPrincipal.appendChild(mensagem);
-                }
-
-            } catch (error) {
-                console.error("Erro ao carregar as receitas:", error);
+        if (receitas && receitas.length > 0) {
+          const primeiras = receitas.slice(0, 4);
+          primeiras.forEach(receita => {
+        const botao = document.createElement('button');
+        botao.textContent = receita.title;
+        botao.addEventListener('click', () => {
+            const todasReceitas = document.querySelectorAll('.receita-item');
+            todasReceitas.forEach(item => item.classList.remove('destacada'));
+            const receitaSelecionada = Array.from(todasReceitas).find(div => {
+            return div.querySelector('h3')?.textContent === receita.title;
+            });
+            if (receitaSelecionada) {
+            receitaSelecionada.classList.add('destacada');
+            receitaSelecionada.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-        }
+        });
+        listaReceitasSidebar.appendChild(botao);
+        });
 
-                async function adicionarAosFavoritos(receitaId) {
+
+            const mais = document.createElement('button');
+            mais.textContent = 'Gerar Receita';
+            mais.addEventListener('click', () => {
+            window.location.href = 'pag-ingredientes.html';
+            });
+            listaReceitasSidebar.appendChild(mais);
+
+
+
+          receitas.forEach(receita => {
+            const item = document.createElement('div');
+            item.className = 'receita-item';
+            item.style.minHeight = '100px';
+            item.style.overflow = 'hidden';
+
+            const titulo = document.createElement('h3');
+            titulo.textContent = receita.title;
+
+            let textoIngredientes;
             try {
-                const params = new URLSearchParams();
-                params.append("receita_id", receitaId);
-
-                const response = await fetch('http://127.0.0.1:8000/curtir', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    credentials: 'include',
-                    body: params
-                });
-
-                if (!response.ok) {
-                    console.error(`Erro ao adicionar aos favoritos: ${response.status}`);
-                    return;
-                }
-
-                console.log("Receita curtida com sucesso!");
-            } catch (error) {
-                console.error("Erro ao adicionar aos favoritos:", error);
+              const array = JSON.parse(receita.ingredients);
+              textoIngredientes = Array.isArray(array) ? array.join(', ') : receita.ingredients;
+            } catch {
+              textoIngredientes = receita.ingredients;
             }
+
+            const ing = document.createElement('p');
+            ing.textContent = `Ingredientes: ${textoIngredientes}`;
+
+            const instrucoes = document.createElement('p');
+            instrucoes.textContent = `Instruções: ${receita.instructions}`;
+            instrucoes.style.maxHeight = '0';
+            instrucoes.style.overflow = 'hidden';
+            instrucoes.style.transition = 'max-height 0.3s ease';
+
+            const botaoFav = document.createElement('button');
+            botaoFav.className = 'adicionar-favorito';
+            botaoFav.textContent = 'Adicionar aos Favoritos';
+            botaoFav.addEventListener('click', (e) => {
+              e.stopPropagation();
+              adicionarAosFavoritos(receita.id);
+            });
+
+            item.appendChild(titulo);
+            item.appendChild(ing);
+            item.appendChild(instrucoes);
+            item.appendChild(botaoFav);
+
+            item.addEventListener('click', () => {
+              const visivel = instrucoes.style.maxHeight !== '0px';
+              instrucoes.style.maxHeight = visivel ? '0px' : '500px';
+            });
+
+            listaReceitasPrincipal.appendChild(item);
+          });
+
+        } else {
+          listaReceitasPrincipal.innerHTML = '<p>Nenhuma receita encontrada.</p>';
+        }
+      } catch (error) {
+        console.error("Erro ao carregar as receitas:", error);
+      }
+    }
+
+    async function adicionarAosFavoritos(receitaId) {
+      try {
+        const params = new URLSearchParams();
+        params.append("receita_id", receitaId);
+
+        const response = await fetch('http://127.0.0.1:8000/curtir', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          credentials: 'include',
+          body: params
+        });
+
+        if (!response.ok) {
+          console.error(`Erro ao adicionar aos favoritos: ${response.status}`);
+          return;
         }
 
-        function exibirDetalhesReceita(receita) {
-            // Implementar a lógica para exibir os detalhes completos da receita
-            console.log("Detalhes da receita:", receita);
-            // Você pode redirecionar para outra página ou atualizar o conteúdo da página atual
-        }
+        console.log("Receita curtida com sucesso!");
+      } catch (error) {
+        console.error("Erro ao adicionar aos favoritos:", error);
+      }
+    }
 
-        window.onload = carregarReceitas;
-    </script>
+    function exibirDetalhesReceita(receita) {
+      console.log("Detalhes da receita:", receita);
+    }
+
+    window.onload = carregarReceitas;
+  </script>
 </body>
-
 </html>

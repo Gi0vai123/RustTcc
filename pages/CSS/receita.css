@@ -217,3 +217,15 @@ input {
     color: #ccc;
     margin: 10px 0;
 }
+
+.receita-item.destacada {
+    animation: destaque 1s ease;
+    border-color: #ff3366;
+    box-shadow: 0 0 10px #ff3366;
+}
+
+@keyframes destaque {
+    0% { background-color: #fdf1cf; }
+    50% { background-color: #ffe6cc; }
+    100% { background-color: #fdf1cf; }
+}
