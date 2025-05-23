@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Favoritos - Receitas</title>
+  <link rel="stylesheet" href="favoritos.css">
+  <link rel="stylesheet" href="CSS/drop.css">
+  <link rel="stylesheet" href="CSS/barrapesquisa.css">
+  <style>
+    .pesquisa {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .pesquisa input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .icone-lupa {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<script>
+  async function carregarFavoritos() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
+
+      if (!response.ok) {
+        throw new Error('Erro ao buscar favoritos');
+      }
+
+      const receitas = await response.json();
+      const lista = document.querySelector('.lista');
+      lista.innerHTML = ''; // Limpa os itens anteriores
+
+      receitas.forEach(({ title, instructions }) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="estrela">★</span>
+          <strong>${title}</strong>
+          <p>${instructions.slice(0, 80)}...</p>
+        `;
+        lista.appendChild(li);
+      });
+
+    } catch (error) {
+      console.error('Erro ao carregar favoritos:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', carregarFavoritos);
+</script>
+
+<body>
+
+
+  <div class="principal">
+    <header>
+      <div>
+        <nav>
+            <div id="navbar">
+              <a href="pag-receita.html">Receitas</a>
+              <span>|</span>
+              <a href="home-r.html">Início</a>
+              <span>|</span>
+              <a href="favoritos.html" class="ativo">Favoritos</a>
+               <span>|</span>
+              <a href="home-r.html">ingredientes</a>
+              <div class="dropdown" id="menuDropdown">
+
+                <div class="dropdown-content">
+
+                </div>
+              </div>
+            </div>
+        </nav>
+      </div>
+      
+        <div class="search-container">
+        </div>
+    </header>
+
+    <main>
+      <ul class="lista">
+        <li><span class="estrela">★</span> <strong>Coxinha</strong> <p>Coloque a água, o leite, a margarina, o caldo e o sal em uma panela e misture até ferver...</p></li>
+        <li><span class="estrela">★</span> <strong>Esfiha de Carne</strong> <p>Misturar o leite (de morno à temperatura ambiente), o açúcar, os ovos e o fermento. Ag...</p></li>
+        <li><span class="estrela">★</span> <strong>Bolo de Fubá</strong> <p>Bata todos os ingredientes no liquidificador. Coloque em uma forma untada e enfarinha...</p></li>
+        <li><span class="estrela">★</span> <strong>Torta de Limão</strong> <p>Triture o biscoito de maisena em um liquidificador ou processador. Junte a margarina e f...</p></li>
+        <li><span class="estrela">★</span> <strong>Pudim de Pão</strong> <p>Misture todos os ingredientes no liquidificador e bata bem. Reserve. Em uma forma própr...</p></li>
+        <li><span class="estrela">★</span> <strong>Suco de Banana</strong> <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite o...</p></li>
+        <li><span class="estrela">★</span> <strong>Torta de Frango</strong> <p>Cozinhe o peito de frango no caldo até ficar macio. Separe 1 xícara (chá) de caldo do cozi...</p></li>
+        <li><span class="estrela">★</span> <strong>Pavê de Brigadeiro</strong> <p>Colocar todos os ingredientes na panela e levar ao fogo, mexendo sempre, até engrossar...</p></li>
+        <li><span class="estrela">★</span> <strong>Risoto de Camarão</strong> <p>Adicione em uma panela grande com tampa, o azeite, a manteiga, o alho e o arroz. Mex...</p></li>
+      </ul>
+    </main>
+  </div>
+</body>
+<script src="js-pages/dropdown.js"></script>
+</html>
