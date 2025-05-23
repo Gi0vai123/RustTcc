@@ -135,3 +135,70 @@ main {
   cursor: pointer;
   z-index: 10;
 }
+
+.pesquisa {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .pesquisa input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .icone-lupa {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    /* Estiliza os itens da lista para ficarem clicáveis */
+    .lista li {
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #fafafa;
+      list-style: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .lista li:hover {
+      background-color: #f0f0f0;
+    }
+
+    .estrela {
+      color: gold;
+      margin-right: 10px;
+      user-select: none;
+      font-size: 18px;
+      vertical-align: middle;
+    }
+
+    /* Estilo do destaque da receita */
+    .receita-destaque {
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #fff8dc;
+      border: 1px solid #f0e68c;
+      border-radius: 6px;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .receita-destaque h3 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #b8860b;
+    }
+
+    .receita-destaque p strong {
+      font-weight: 700;
+      font-size: 20px;
+    }

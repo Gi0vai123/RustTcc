@@ -2,66 +2,76 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Favoritos - Receitas</title>
-  <link rel="stylesheet" href="CSS/favoritos.css">
-  <link rel="stylesheet" href="CSS/drop.css">
-  <link rel="stylesheet" href="CSS/barrapesquisa.css">
-  <style>
-    .pesquisa {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-    }
+  <link rel="stylesheet" href="CSS/favoritos.css" />
+  <link rel="stylesheet" href="CSS/drop.css" />
+  <link rel="stylesheet" href="CSS/barrapesquisa.css" />
+  <script>
+    async function carregarFavoritos() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
 
-    .pesquisa input[type="text"] {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+        if (!response.ok) {
+          throw new Error('Erro ao buscar favoritos');
+        }
 
-    .icone-lupa {
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
-    }
-  </style>
-</head>
-<script>
-  async function carregarFavoritos() {
-    try {
-      const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
+        const receitas = await response.json();
+        const lista = document.querySelector('.lista');
+        lista.innerHTML = ''; // Limpa os itens anteriores
 
-      if (!response.ok) {
-        throw new Error('Erro ao buscar favoritos');
+        let destaqueAtual = null;
+
+        receitas.forEach(({ id, title, ingredients, instructions }) => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="estrela" data-id="${id}">★</span>
+            <strong>${title}</strong>
+            <p class="resumo">${instructions.slice(0, 80)}...</p>
+          `;
+
+          // Clique no li todo para expandir/recolher
+          li.addEventListener('click', () => {
+            // Remove destaque anterior se existir e for diferente deste li
+            if (destaqueAtual && destaqueAtual !== li) {
+              const anterior = destaqueAtual.querySelector('.receita-destaque');
+              if (anterior) anterior.remove();
+            }
+
+            // Verifica se já tem destaque aqui para remover (recolher)
+            const existente = li.querySelector('.receita-destaque');
+            if (existente) {
+              existente.remove();
+              destaqueAtual = null;
+              return;
+            }
+
+            // Cria o elemento com os detalhes da receita
+            const destaque = document.createElement('div');
+            destaque.className = 'receita-destaque';
+            destaque.innerHTML = `
+              <h3>${title}</h3>
+              <p><strong>Ingredientes:</strong> ${ingredients}</p>
+              <p><strong>Modo de preparo:</strong> ${instructions}</p>
+            `;
+
+            li.appendChild(destaque);
+            destaqueAtual = li;
+          });
+
+          lista.appendChild(li);
+        });
+
+      } catch (error) {
+        console.error('Erro ao carregar favoritos:', error);
       }
-
-      const receitas = await response.json();
-      const lista = document.querySelector('.lista');
-      lista.innerHTML = ''; // Limpa os itens anteriores
-
-      receitas.forEach(({ title, instructions }) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <span class="estrela">★</span>
-          <strong>${title}</strong>
-          <p>${instructions.slice(0, 80)}...</p>
-        `;
-        lista.appendChild(li);
-      });
-
-    } catch (error) {
-      console.error('Erro ao carregar favoritos:', error);
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', carregarFavoritos);
-</script>
+    document.addEventListener('DOMContentLoaded', carregarFavoritos);
+  </script>
+</head>
 
 <body>
-
-
   <div class="principal">
     <header>
       <div>
@@ -75,52 +85,23 @@
             <span>|</span>
             <a href="pag-ingredientes.html">ingredientes</a>
             <div class="dropdown" id="menuDropdown">
-
-              <div class="dropdown-content">
-
-              </div>
+              <div class="dropdown-content"></div>
             </div>
           </div>
         </nav>
       </div>
 
-      <div class="search-container">
-      </div>
+      <div class="search-container"></div>
     </header>
 
     <main>
       <ul class="lista">
-        <li><span class="estrela">★</span> <strong>Coxinha</strong>
-          <p>Coloque a água, o leite, a margarina, o caldo e o sal em uma panela e misture até ferver...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Esfiha de Carne</strong>
-          <p>Misturar o leite (de morno à temperatura ambiente), o açúcar, os ovos e o fermento. Ag...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Bolo de Fubá</strong>
-          <p>Bata todos os ingredientes no liquidificador. Coloque em uma forma untada e enfarinha...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Torta de Limão</strong>
-          <p>Triture o biscoito de maisena em um liquidificador ou processador. Junte a margarina e f...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Pudim de Pão</strong>
-          <p>Misture todos os ingredientes no liquidificador e bata bem. Reserve. Em uma forma própr...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Suco de Banana</strong>
-          <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite o...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Torta de Frango</strong>
-          <p>Cozinhe o peito de frango no caldo até ficar macio. Separe 1 xícara (chá) de caldo do cozi...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Pavê de Brigadeiro</strong>
-          <p>Colocar todos os ingredientes na panela e levar ao fogo, mexendo sempre, até engrossar...</p>
-        </li>
-        <li><span class="estrela">★</span> <strong>Risoto de Camarão</strong>
-          <p>Adicione em uma panela grande com tampa, o azeite, a manteiga, o alho e o arroz. Mex...</p>
-        </li>
+        <!-- Receitas carregadas via JS aqui -->
       </ul>
     </main>
   </div>
+
+  <script src="js-pages/dropdown.js"></script>
 </body>
-<script src="js-pages/dropdown.js"></script>
 
 </html>
