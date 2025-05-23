@@ -180,9 +180,9 @@ input {
 }
 
 .adicionar-favorito {
-    background: none;
+    background: #fff0BD;
     border: 1px solid #000000;
-    color: #007bff;
+    color: #302f2f;
     font-size: 1em;
     cursor: pointer;
     padding: 8px 12px;
@@ -191,7 +191,7 @@ input {
 }
 
 .adicionar-favorito:hover {
-    background-color: #e0d3af;
+    background-color: #faf7ef;
 }
 
 .receitas-lista-sidebar button {
