@@ -157,3 +157,36 @@ nav a {
     display: flex;
 
 }
+.receita-item {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .receita-item h4 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .receita-item p {
+      margin-bottom: 0;
+    }
+
+    .remover-favorito {
+      background: none;
+      border: none;
+      color: #ff6b6b;
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .remover-favorito:hover {
+      background-color: #ffe0e0;
+    }

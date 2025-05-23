@@ -107,3 +107,35 @@ button {
 .button button:hover {
     background-color: #D7E5B9;
 }
+/* Correções de estilo para a sidebar e o quadrado */
+        .container {
+            display: flex;
+            gap: 20px;
+            min-height: 100vh; /* Alterado para min-height para acompanhar o conteúdo */
+        }
+
+        .sidebar {
+            background-color: #C7DB9C;
+            width: 220px;
+            padding: 20px;
+            /* height: 100%; Removido para permitir o crescimento */
+            display: flex;
+            flex-direction: column; /* Organiza os botões verticalmente */
+            align-items: flex-start; /* Alinha os botões à esquerda */
+        }
+
+        .button {
+            width: 100%; /* Garante que os botões ocupem a largura total da sidebar */
+        }
+
+        .quadrado {
+            /* width: 370px; Removido para permitir o crescimento horizontal se necessário */
+            height: auto; /* Alterado para auto para acompanhar o conteúdo */
+            background-color: #fdf1cf;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: block;
+            margin: 0 auto;
+            overflow-y: auto; /* Adiciona barra de rolagem vertical quando o conteúdo exceder */
+        }
