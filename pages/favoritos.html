@@ -27,6 +27,34 @@
     }
   </style>
 </head>
+<script>
+  async function carregarFavoritos() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/curtidas',{credentials:"include"});
+      if (!response.ok) {
+        throw new Error('Erro ao buscar favoritos');
+      }
+
+      const receitas = await response.json();
+      const lista = document.querySelector('.lista');
+      lista.innerHTML = ''; // Limpa o conteúdo existente
+
+      receitas.forEach(receita => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span class="estrela">★</span>
+          <strong>${receita.title}</strong>
+          <p>${receita.instructions.slice(0, 80)}...</p>
+        `;
+        lista.appendChild(li);
+      });
+    } catch (error) {
+      console.error('Erro ao carregar favoritos:', error);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', carregarFavoritos);
+</script>
 <body>
   <div class="barra-lateral"></div>
   <div class="barra-lateral">

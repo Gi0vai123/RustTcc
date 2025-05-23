@@ -1,109 +1,226 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mel00N</title>
-  <link rel="stylesheet" href="CSS/ingredientes.css">
-  <link rel=" stylesheet" href="CSS/drop.css">
-  <link rel="stylesheet" href="CSS/barrapesquisa.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mel00N - Favoritos</title>
+    <link rel="stylesheet" href="CSS/ingreientes.css" />
+    <link rel="stylesheet" href="CSS/drop.css">
+    <link rel="stylesheet" href="CSS/barrapesquisa.css">
+    <style>
+        .receita-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .receita-item h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .receita-item p {
+            margin-bottom: 0;
+        }
+
+        .remover-favorito {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .remover-favorito:hover {
+            background-color: #ffe0e0;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <div>
-        <h3>Ingredientes Adicionados</h3>
-        <ul class="ingredientes-lista">
-          <li>Farinha <button>✖</button></li>
-          <li>Ovo <button>✖</button></li>
-          <li>Óleo <button>✖</button></li>
-          <li>Leite <button>✖</button></li>
-          <li>Morango <button>✖</button></li>
-          <li>Queijo <button>✖</button></li>
-          <li>Limão <button>✖</button></li>
-          <li>Açúcar <button>✖</button></li>
-          <li>Maracujá <button>✖</button></li>
-        </ul>
-      </div>
-      <div id="gerar">
-        <div class="gen" style="    margin-top: 150px;">
-          <button>Gerar Receita</button>
-        </div>
-      </div>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Ingredientes Adicionados</h3>
+            <ul class="ingredientes-lista">
+            </ul>
+        </aside>
 
-    </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <nav>
+                    <div id="navbar">
+                        <a href="pag-receita.html">Receitas</a>
+                        <span>|</span>
+                        <a href="home-r.html">Início</a>
+                        <span>|</span>
+                        <a href="favoritos.html" class="ativo">Favoritos</a>
+                        <div class="dropdown" id="menuDropdown">
+                            <button class="dropdown-btn" onclick="toggleDropdown()"></button>
+                            <div class="dropdown-content">
+                                <a href="pag-ingredientes.html">ingredientes</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="search-container">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5
+                                    6.5 6.5 0 109.5 16c1.61 0 3.09-.59
+                                    4.23-1.57l.27.28v.79l5 4.99
+                                    L20.49 19l-4.99-5zm-6 0C8.01
+                                    14 6 11.99 6 9.5S8.01 5
+                                    10.5 5 15 7.01 15 9.5
+                                    12.99 14 10.5 14z"/>
+                    </svg>
+                    <input type="search" name="pesquisa" placeholder="Pesquisar" required>
+                </div>
+            </header>
 
-    <main class="main-content">
-      <header class="topbar">
-        <nav>
-          <div id="navbar">
-            <a href="pag-receita.html">Receitas</a>
-            <span>|</span>
-            <a href="home-r.html">Início</a>
-            <span>|</span>
-            <a href="favoritos.html" class="ativo">Favoritos</a>
-            <div class="dropdown" id="menuDropdown">
-              <button class="dropdown-btn" onclick="toggleDropdown()"></button>
-              <div class="dropdown-content">
-                <a href="pag-ingredientes.html">ingredientes</a>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <div class="search-container">
-          <svg viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 
-                    6.5 6.5 0 109.5 16c1.61 0 3.09-.59 
-                    4.23-1.57l.27.28v.79l5 4.99 
-                    L20.49 19l-4.99-5zm-6 0C8.01 
-                    14 6 11.99 6 9.5S8.01 5 
-                    10.5 5 15 7.01 15 9.5 
-                    12.99 14 10.5 14z" />
-          </svg>
+            
 
-          <input type="search" name="pesquisa" placeholder="Pesquisar" required>
-        </div>
-      </header>
-
-      <section class="sugestoes">
-        <div class="sugestao">
-          <h4>sugestão de Ingrediente</h4>
-          <div class="botoes">
-            <button>Macarrão</button>
-            <button>Alho</button>
-            <button>Canela</button>
-            <button>Frango</button>
-            <button>Goma de tapioca</button>
-            <button>Salsinha</button>
-            <button>Manteiga</button>
-            <button>+ Ingredientes</button>
-          </div>
-        </div>
+                <div class="sugestao">
+                    <h4>sugestão de Ingrediente</h4>
+                    <ul class="botoes">
+                
+                    </ul>
+                </div>
+<section class="sugestoes">
+                <section class="acoes-geracao" style="margin-top: 20px;">
+  <button id="gerar-receita" style="padding: 10px 20px;">🍳 Gerar Receita</button>
+  <form id="form-upload" enctype="multipart/form-data" style="display: inline-block; margin-left: 10px;">
+    <input type="file" name="imagem" accept="image/*" required />
+    <button type="submit" style="padding: 10px;">📷 Enviar Imagem</button>
+  </form>
+</section>
+                <h2>não encontrou seu ingrediente?<br> adicione-o aqui</h2>
+                <form id="add-food" >
+                    <input type="text" name="food" placeholder="Adicionar Ingrediente" required>
+                    <button type="submit">Adicionar</button>
+                </form>
 
 
-        <div class="sugestao">
-          <h4>sugestão de Receita</h4>
-          <div class="botoes">
-            <button>Macarrão com Molho Branco</button>
-            <button>Bolo de Morango</button>
-            <button>Panqueca Simples</button>
-            <button>Omelete de Queijo</button>
-            <button>Merengue de Morango</button>
-            <button>Bolinho de Chuva</button>
-            <button>Mousse de Maracujá</button>
-            <button>+ Receitas</button>
-          </div>
-        </div>
-      </section>
-      <div class="gen" style="    margin-top: 240px;">
-        <button>Selecionar Foto</button>
-      </div>
-    </main>
-  </div>
+            </section>
+            
+        </main>
+    </div>
+    <script src="js-pages/dropdown.js"></script>
+    <script>
+  // 1. Carrega os ingredientes via GET
+  window.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/gerador");
+      if (!response.ok) throw new Error("Erro ao carregar ingredientes");
+      const ingredientes = await response.json();
+      const ul = document.querySelector(".botoes");
+      ul.innerHTML = "";
+      ingredientes.forEach(item => {
+        const li = document.createElement("button");
+        li.textContent = item.food;
+        //const btn = document.createElement("button");
+        //btn.textContent = "+";
+        //li.appendChild(btn);
+        ul.appendChild(li);
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao carregar ingredientes.");
+    }
+  });
 
-  <script src="js-pages/dropdown.js"></script>
+  document.querySelector(".botoes").addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON") {
+      const li = document.createElement("li");
+      li.textContent = e.target.textContent;
+      const ul = document.querySelector(".ingredientes-lista");
+      const btn = document.createElement("button");
+      btn.textContent = "❌";
+      li.appendChild(btn);
+      ul.appendChild(li);
+      e.target.remove(); // Remove o botão clicado
+    }
+  });
+    // 1. Adiciona o evento de clique para remover ingredientes
+    document.querySelector(".ingredientes-lista").addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON") {
+      const li = e.target.parentElement;
+      const ul = document.querySelector(".botoes");
+      const btn = document.createElement("button");
+      btn.textContent = li.firstChild.textContent;
+      ul.appendChild(btn);
+      li.remove(); // Remove o ingrediente da lista
+    }
+});
+
+  // 2. Botão para gerar receita com ingredientes
+  document.getElementById("gerar-receita").addEventListener("click", async () => {
+    const lis = document.querySelectorAll(".ingredientes-lista li");
+    const lista = Array.from(lis).map(li => li.firstChild.textContent.trim());
+    try {
+      const response = await fetch("http://127.0.0.1:8000/gerar", {
+        credentials: "include",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ list: lista })
+      });
+      if (!response.ok) throw new Error("Erro ao gerar receita");
+      const receita = await response.json();
+      alert(`🍽️ Receita Gerada: ${receita.title}`);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao gerar receita.");
+    }
+  });
+
+
+  document.getElementById("add-food").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    try {
+      const response = await fetch("http://127.0.1:8000/add_food", {
+        credentials: "include",
+        method: "POST",
+        body: formData
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao adicionar ingrediente.");
+    }
+    const food = formData.get("food");
+    const li = document.createElement("li");
+    li.textContent = food;
+    const ul = document.querySelector(".ingredientes-lista");
+    const btn = document.createElement("button");
+    btn.textContent = "❌";
+    li.appendChild(btn);
+    ul.appendChild(li);
+    e.target.reset(); // Limpa o campo de entrada
+  });
+
+  // 3. Formulário para upload de imagem e geração de receita
+  document.getElementById("form-upload").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/upload", {
+        credentials: "include",
+        method: "POST",
+        body: formData
+      });
+      if (!response.ok) throw new Error("Erro ao enviar imagem");
+      const receita = await response.json();
+      alert(`📸 Receita com imagem: ${receita.title}`);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar imagem e gerar receita.");
+    }
+  });
+</script>
+
 </body>
-
 </html>
