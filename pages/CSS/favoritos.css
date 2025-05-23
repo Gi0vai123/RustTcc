@@ -20,13 +20,12 @@ body {
 }
 
 .principal {
-  margin-left: 50px;
   width: calc(100% - 50px);
 }
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   flex-wrap: wrap;
