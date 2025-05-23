@@ -32,36 +32,35 @@
   async function carregarFavoritos() {
     try {
       const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
+
       if (!response.ok) {
         throw new Error('Erro ao buscar favoritos');
       }
 
       const receitas = await response.json();
       const lista = document.querySelector('.lista');
-      lista.innerHTML = ''; // Limpa o conteúdo existente
+      lista.innerHTML = ''; // Limpa os itens anteriores
 
-      receitas.forEach(receita => {
+      receitas.forEach(({ title, instructions }) => {
         const li = document.createElement('li');
         li.innerHTML = `
           <span class="estrela">★</span>
-          <strong>${receita.title}</strong>
-          <p>${receita.instructions.slice(0, 80)}...</p>
+          <strong>${title}</strong>
+          <p>${instructions.slice(0, 80)}...</p>
         `;
         lista.appendChild(li);
       });
+
     } catch (error) {
       console.error('Erro ao carregar favoritos:', error);
     }
   }
 
-  window.addEventListener('DOMContentLoaded', carregarFavoritos);
+  document.addEventListener('DOMContentLoaded', carregarFavoritos);
 </script>
 
 <body>
-  <div class="barra-lateral"></div>
-  <div class="barra-lateral">
-    <div class="menu-icon">☰</div>
-  </div>
+
 
   <div class="principal">
     <header>
@@ -73,10 +72,12 @@
             <a href="home-r.html">Início</a>
             <span>|</span>
             <a href="favoritos.html" class="ativo">Favoritos</a>
+            <span>|</span>
+            <a href="pag-ingredientes.html">ingredientes</a>
             <div class="dropdown" id="menuDropdown">
-              <button class="dropdown-btn" onclick="toggleDropdown()"></button>
+
               <div class="dropdown-content">
-                <a href="pag-ingredientes.html">ingredientes</a>
+
               </div>
             </div>
           </div>
@@ -84,17 +85,6 @@
       </div>
 
       <div class="search-container">
-        <svg viewBox="0 0 24 24">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 
-                    6.5 6.5 0 109.5 16c1.61 0 3.09-.59 
-                    4.23-1.57l.27.28v.79l5 4.99 
-                    L20.49 19l-4.99-5zm-6 0C8.01 
-                    14 6 11.99 6 9.5S8.01 5 
-                    10.5 5 15 7.01 15 9.5 
-                    12.99 14 10.5 14z" />
-        </svg>
-
-        <input type="search" name="pesquisa" placeholder="Pesquisar" required>
       </div>
     </header>
 
@@ -116,7 +106,7 @@
           <p>Misture todos os ingredientes no liquidificador e bata bem. Reserve. Em uma forma própr...</p>
         </li>
         <li><span class="estrela">★</span> <strong>Suco de Banana</strong>
-          <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite (o...</p>
+          <p>Descasque as bananas e corte em pedaços. Coloque no liquidificador junto com o leite o...</p>
         </li>
         <li><span class="estrela">★</span> <strong>Torta de Frango</strong>
           <p>Cozinhe o peito de frango no caldo até ficar macio. Separe 1 xícara (chá) de caldo do cozi...</p>
