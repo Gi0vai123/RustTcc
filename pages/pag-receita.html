@@ -157,27 +157,26 @@
             }
         }
 
-        async function adicionarAosFavoritos(receitaId) {
+                async function adicionarAosFavoritos(receitaId) {
             try {
+                const params = new URLSearchParams();
+                params.append("receita_id", receitaId);
+
                 const response = await fetch('http://127.0.0.1:8000/curtir', {
-                    credentials: "include",
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     credentials: 'include',
-                    body: JSON.stringify({ receita_id: receitaId })
+                    body: params
                 });
 
                 if (!response.ok) {
                     console.error(`Erro ao adicionar aos favoritos: ${response.status}`);
-                    // Adicionar feedback ao usuário sobre o erro
                     return;
                 }
 
-                const data = await response.json();
-                console.log(data.message); // Exibir mensagem de sucesso
-                // Adicionar feedback visual ao usuário (por exemplo, mudar o texto do botão)
+                console.log("Receita curtida com sucesso!");
             } catch (error) {
                 console.error("Erro ao adicionar aos favoritos:", error);
             }
