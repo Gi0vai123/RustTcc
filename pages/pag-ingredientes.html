@@ -49,19 +49,25 @@
       </div>
       <section class="sugestoes">
         <section class="acoes-geracao" style="margin-top: 20px;">
-          <button id="gerar-receita" style="padding: 10px 20px;">🍳 Gerar Receita</button>
-          <form id="form-upload" enctype="multipart/form-data" style="display: inline-block; margin-left: 10px;">
-            <input type="file" name="imagem" accept="image/*" required />
-            <button type="submit" style="padding: 10px;">📷 Enviar Imagem</button>
-          </form>
+          <div>
+            <button id="gerar-receita" style="padding: 10px 20px;">🍳 Gerar Receita</button>
+          </div>
+          <div id="col-enviarimg">
+            <form id="form-upload" enctype="multipart/form-data" style="display: inline-block; margin-left: 10px;">
+                <label for="upload-imagem" class="upload-label">📷 Selecionar Imagem</label>
+                <input type="file" id="upload-imagem" name="imagem" accept="image/*" required hidden>
+              <button type="submit" style="padding: 10px;">Enviar</button>
+            </form>
+          </div>
+
         </section>
-        <h2>não encontrou seu ingrediente?<br> adicione-o aqui</h2>
-        <form id="add-food">
-          <input type="text" name="food" placeholder="Adicionar Ingrediente" required>
-          <button type="submit">Adicionar</button>
-        </form>
-
-
+        <div id="nao-encontrou">
+          <h2>não encontrou seu ingrediente?<br> adicione-o aqui</h2>
+          <form id="add-food">
+            <input type="text" name="food" placeholder="Adicionar Ingrediente" required>
+            <button type="submit">Adicionar</button>
+          </form>
+        </div>
       </section>
 
     </main>

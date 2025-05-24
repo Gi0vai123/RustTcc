@@ -92,6 +92,7 @@ nav a {
     background-color: #fdf1cf;
     padding: 15px;
     border-radius: 15px;
+    margin-top: 20px;
     margin-bottom: 20px;
     border: 1px solid #999;
 }
@@ -190,3 +191,93 @@ nav a {
     .remover-favorito:hover {
       background-color: #ffe0e0;
     }
+
+.acoes-geracao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.acoes-geracao button,
+.acoes-geracao input[type="file"] {
+  padding: 10px 20px;
+  background-color: #D7E5B9;
+  border: 1px solid #aac48f;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.acoes-geracao button:hover {
+  background-color: #c4d99b;
+}
+
+#form-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#nao-encontrou {
+  text-align: center;
+  margin-top: 50px;
+  
+}
+
+#nao-encontrou h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+#add-food {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#add-food input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#add-food button {
+  padding: 10px 15px;
+  background-color: #D7E5B9;
+  border: 1px solid #aac48f;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#add-food button:hover {
+  background-color: #c4d99b;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #D7E5B9;
+  color: #000;
+  border: 1px solid #aac48f;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.upload-label:hover {
+  background-color: #c6d8a6;
+}
+
+#form-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  align-items: center; 
+}
+
