@@ -16,7 +16,7 @@ body {
 
 .container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -27,6 +27,7 @@ body {
     display: flex;
     flex-direction: column; /* Organiza os botões verticalmente */
     align-items: flex-start; /* Alinha os botões à esquerda */
+    align-self: stretch;
 }
 
 
