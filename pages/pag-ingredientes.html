@@ -117,32 +117,35 @@
 
     // 2. Botão para gerar receita com ingredientes
     document.getElementById("gerar-receita").addEventListener("click", async () => {
-      const lis = document.querySelectorAll(".ingredientes-lista li");
-      const lista = Array.from(lis).map(li => li.firstChild.textContent.trim());
-      try {
-        loader.style.display = "block"; // Mostrar loader
-        const response = await fetch("http://127.0.0.1:8000/gerar", {
-          credentials: "include",
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ list: lista })
-        });
-        if (!response.ok) throw new Error("Erro ao gerar receita");
-        const receita = await response.json();
-        loader.style.display = "none"; // Esconder loader
-        alert(`🍽️ Receita Gerada: ${receita.title}`);
-      } catch (err) {
-        console.error(err);
-        alert("Erro ao gerar receita.");
-      }
+  const loader = document.querySelector(".loader");
+  const lis = document.querySelectorAll(".ingredientes-lista li");
+  const lista = Array.from(lis).map(li => li.firstChild.textContent.trim());
+  try {
+    loader.style.display = "block"; // Mostrar loader
+    const response = await fetch("http://127.0.0.1:8000/gerar", {
+      credentials: "include",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ list: lista })
     });
+    if (!response.ok) throw new Error("Erro ao gerar receita");
+    const receita = await response.json();
+    loader.style.display = "none"; // Esconder loader
+    alert(`🍽️ Receita Gerada: ${receita.title}`);
+  } catch (err) {
+    loader.style.display = "none";
+    console.error(err);
+    alert("Erro ao gerar receita.");
+  }
+});
+
 
 
     document.getElementById("add-food").addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
       try {
-        const response = await fetch("http://127.0.1:8000/add_food", {
+        const response = await fetch("http://127.0.0.1:8000/add_food", {
           credentials: "include",
           method: "POST",
           body: formData
