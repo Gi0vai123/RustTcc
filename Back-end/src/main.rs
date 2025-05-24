@@ -57,7 +57,6 @@ struct LoginForm {
 #[derive(FromForm)]
 pub struct Upload<'r> {
     pub imagem: TempFile<'r>,
-    pub texto: String,
 }
 
 
@@ -161,6 +160,12 @@ struct ReceitaForm {
     ingredients: String,
     instructions: String,
 }
+//formulario de adicionar comida
+#[derive(Deserialize, Serialize, sqlx::FromRow, FromForm)]
+struct FoodForm{
+    food: String
+}
+
 
 //FORMULARIO DA LISTA DE INGREDIENTES
 #[derive(Deserialize, Serialize,FromForm, sqlx::FromRow)]
@@ -290,16 +295,13 @@ async fn gerar(
     };
 
     let prompt = format!(
-        "Crie uma receita usando os ingredientes: {}.
-    Responda somente com um JSON puro (sem texto antes ou depois) com os campos:
-    'title' (string), 'ingredients' (string), e 'instructions' (string).
-    Exemplo:
-    {{
-        \"title\": \"Nome\",
-        \"ingredients\": \"lista de ingredientes\",
-        \"instructions\": \"modo de preparo\"
-    }}", ingredientes.join(", ")
+        "Crie uma receita com os ingredientes: {}. Não é necessário usar todos eles.
+Responda com um JSON puro, sem blocos de código ou texto adicional. Use o seguinte formato
+se atentando ao nome dos campos:
+{{\"title\": \"...\", \"ingredients\": \"...\", \"instructions\": \"...\"}}",
+        ingredientes.join(", ")
     );
+
 
     println!("Prompt enviado: {}", prompt);
 
@@ -310,7 +312,7 @@ async fn gerar(
         .header("Authorization", format!("Bearer {}", openrouter_key))
         .header("Content-Type", "application/json")
         .json(&serde_json::json!({
-            "model": "meta-llama/llama-3-8b-instruct",
+            "model": "deepseek/deepseek-chat-v3-0324:free",
             "messages": [{"role": "user", "content": prompt}]
         }))
         .send()
@@ -342,8 +344,15 @@ async fn gerar(
         }
     };
 
-    // Desserializa para ReceitaForm (sem campo id)
-    let receita_form: ReceitaForm = match serde_json::from_str(content) {
+    // Remove bloco markdown ```json ... ```
+    let cleaned_content = content
+        .trim()
+        .trim_start_matches("```json")
+        .trim_start_matches("```")
+        .trim_end_matches("```")
+        .trim();
+
+    let receita_form: ReceitaForm = match serde_json::from_str(cleaned_content) {
         Ok(r) => r,
         Err(e) => {
             eprintln!("Erro ao desserializar Receita: {}", e);
@@ -420,7 +429,7 @@ async fn upload(
 
     //PROMPT PARA GERAR A RECEITA
     let prompt = format!(
-        "Crie uma receita usando os ingredientes visíveis na imagem e considere também o seguinte: {}.\n\
+        "Crie uma receita usando os ingredientes visíveis na imagem.\n\
         Responda somente com um JSON puro (sem texto antes ou depois) com os campos:\n\
         'title' (string), 'ingredients' (string), e 'instructions' (string).\n\
         Exemplo:\n\
@@ -428,8 +437,7 @@ async fn upload(
             \"title\": \"Nome\",\n\
             \"ingredients\": \"lista de ingredientes\",\n\
             \"instructions\": \"modo de preparo\"\n\
-        }}",
-        form.texto
+        }}"
     );
 
     let body = OpenRouterRequest {
@@ -484,6 +492,7 @@ async fn upload(
     let content = json.choices.first()
         .map(|c| c.message.content.clone())
         .ok_or_else(|| Status::InternalServerError)?;
+
 
     let receita_form: ReceitaForm = serde_json::from_str(&content).map_err(|e| {
         eprintln!("Erro ao desserializar JSON da IA: {} - Content: {}", e, content);
@@ -794,6 +803,26 @@ async fn todas_receitas(cookie: &CookieJar<'_>, db: &State<PgPool>) -> Result<Js
     }
 }
 
+#[post("/add_food", data = "<form>")]
+async fn add_food(db: &State<PgPool>, form: Form<FoodForm>) -> Result<String, Status> {
+    let food = form.into_inner();
+    let response = sqlx::query!(
+        "INSERT INTO foods (food) VALUES ($1)",
+        food.food
+    )
+        .execute(db.inner())
+        .await;
+
+    match response {
+        Ok(_) => Ok("Alimento adicionado com sucesso".to_string()),
+        Err(e) => {
+            eprintln!("Erro ao adicionar alimento: {}", e);
+            Err(Status::InternalServerError)
+        }
+    }
+}
+
+
 
 //FUNÇÃO PRINCIPAL PARA RODAR O PROJETO
 #[rocket::main]
@@ -846,6 +875,7 @@ async fn main() {
             curtir_receita,
             todas_receitas,
             list_users,
+            add_food,
             upload])
         .launch()
         .await
