@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="CSS/favoritos.css" />
   <script>
     async function carregarFavoritos() {
+      const lista = document.querySelector('.lista');
+      lista.innerHTML = ''; // Limpa os itens anteriores
+
+      let destaqueAtual = null;
+
       try {
         const response = await fetch('http://127.0.0.1:8000/curtidas', { credentials: "include" });
 
@@ -15,10 +20,16 @@
         }
 
         const receitas = await response.json();
-        const lista = document.querySelector('.lista');
-        lista.innerHTML = ''; // Limpa os itens anteriores
 
-        let destaqueAtual = null;
+        if (!receitas || receitas.length === 0) {
+          lista.innerHTML = `
+            <li>
+              <h3>Nenhuma receita favorita encontrada</h3>
+              <p>Você ainda não adicionou nenhuma receita aos seus favoritos.</p>
+            </li>
+          `;
+          return;
+        }
 
         receitas.forEach(({ id, title, ingredients, instructions }) => {
           const li = document.createElement('li');
@@ -28,15 +39,12 @@
             <p class="resumo">${instructions.slice(0, 80)}...</p>
           `;
 
-          // Clique no li todo para expandir/recolher
           li.addEventListener('click', () => {
-            // Remove destaque anterior se existir e for diferente deste li
             if (destaqueAtual && destaqueAtual !== li) {
               const anterior = destaqueAtual.querySelector('.receita-destaque');
               if (anterior) anterior.remove();
             }
 
-            // Verifica se já tem destaque aqui para remover (recolher)
             const existente = li.querySelector('.receita-destaque');
             if (existente) {
               existente.remove();
@@ -44,7 +52,6 @@
               return;
             }
 
-            // Cria o elemento com os detalhes da receita
             const destaque = document.createElement('div');
             destaque.className = 'receita-destaque';
             destaque.innerHTML = `
@@ -62,6 +69,12 @@
 
       } catch (error) {
         console.error('Erro ao carregar favoritos:', error);
+        lista.innerHTML = `
+          <li>
+            <h3>Erro ao carregar favoritos</h3>
+            <p>Não foi possível carregar suas receitas favoritas. Tente novamente mais tarde.</p>
+          </li>
+        `;
       }
     }
 

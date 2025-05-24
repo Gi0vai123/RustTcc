@@ -42,6 +42,9 @@
   <script src="js-pages/dropdown.js"></script>
   <script>
     async function carregarReceitas() {
+      const listaReceitasPrincipal = document.getElementById('lista-receitas-principal');
+      const listaReceitasSidebar = document.getElementById('lista-receitas-sidebar');
+      
       try {
         const response = await fetch('http://127.0.0.1:8000/minhas_receitas', {
           method: 'GET',
@@ -51,43 +54,44 @@
 
         if (!response.ok) {
           console.error(`Erro ao buscar receitas: ${response.status}`);
+          listaReceitasPrincipal.innerHTML = `
+            <div>
+              <h3>Erro ao carregar receitas</h3>
+              <p>Houve um problema ao tentar buscar suas receitas. Tente novamente mais tarde.</p>
+            </div>
+          `;
           return;
         }
 
         const receitas = await response.json();
-        const listaReceitasPrincipal = document.getElementById('lista-receitas-principal');
-        const listaReceitasSidebar = document.getElementById('lista-receitas-sidebar');
         listaReceitasPrincipal.innerHTML = '';
         listaReceitasSidebar.innerHTML = '';
 
         if (receitas && receitas.length > 0) {
           const primeiras = receitas.slice(0, 4);
           primeiras.forEach(receita => {
-        const botao = document.createElement('button');
-        botao.textContent = receita.title;
-        botao.addEventListener('click', () => {
-            const todasReceitas = document.querySelectorAll('.receita-item');
-            todasReceitas.forEach(item => item.classList.remove('destacada'));
-            const receitaSelecionada = Array.from(todasReceitas).find(div => {
-            return div.querySelector('h3')?.textContent === receita.title;
+            const botao = document.createElement('button');
+            botao.textContent = receita.title;
+            botao.addEventListener('click', () => {
+              const todasReceitas = document.querySelectorAll('.receita-item');
+              todasReceitas.forEach(item => item.classList.remove('destacada'));
+              const receitaSelecionada = Array.from(todasReceitas).find(div => {
+                return div.querySelector('h3')?.textContent === receita.title;
+              });
+              if (receitaSelecionada) {
+                receitaSelecionada.classList.add('destacada');
+                receitaSelecionada.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
             });
-            if (receitaSelecionada) {
-            receitaSelecionada.classList.add('destacada');
-            receitaSelecionada.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        });
-        listaReceitasSidebar.appendChild(botao);
-        });
+            listaReceitasSidebar.appendChild(botao);
+          });
 
-
-            const mais = document.createElement('button');
-            mais.textContent = 'Gerar Receita';
-            mais.addEventListener('click', () => {
+          const mais = document.createElement('button');
+          mais.textContent = 'Gerar Receita';
+          mais.addEventListener('click', () => {
             window.location.href = 'pag-ingredientes.html';
-            });
-            listaReceitasSidebar.appendChild(mais);
-
-
+          });
+          listaReceitasSidebar.appendChild(mais);
 
           receitas.forEach(receita => {
             const item = document.createElement('div');
@@ -137,10 +141,22 @@
           });
 
         } else {
-          listaReceitasPrincipal.innerHTML = '<p>Nenhuma receita encontrada.</p>';
+          listaReceitasPrincipal.innerHTML = `
+            <div>
+              <h3>Nenhuma receita encontrada</h3>
+              <p>Você ainda não gerou nenhuma receita. Experimente criar uma!</p>
+            </div>
+          `;
         }
+
       } catch (error) {
         console.error("Erro ao carregar as receitas:", error);
+        listaReceitasPrincipal.innerHTML = `
+          <div>
+            <h3>Erro ao carregar receitas</h3>
+            <p>Não foi possível conectar ao servidor. Verifique sua conexão ou tente novamente mais tarde.</p>
+          </div>
+        `;
       }
     }
 
@@ -165,10 +181,6 @@
       } catch (error) {
         console.error("Erro ao adicionar aos favoritos:", error);
       }
-    }
-
-    function exibirDetalhesReceita(receita) {
-      console.log("Detalhes da receita:", receita);
     }
 
     window.onload = carregarReceitas;
