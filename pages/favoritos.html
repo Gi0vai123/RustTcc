@@ -40,14 +40,19 @@
           `;
 
           li.addEventListener('click', () => {
+            const resumo = li.querySelector('.resumo');
+            const existente = li.querySelector('.receita-destaque');
+
             if (destaqueAtual && destaqueAtual !== li) {
               const anterior = destaqueAtual.querySelector('.receita-destaque');
+              const resumoAnterior = destaqueAtual.querySelector('.resumo');
               if (anterior) anterior.remove();
+              if (resumoAnterior) resumoAnterior.style.display = 'block';
             }
 
-            const existente = li.querySelector('.receita-destaque');
             if (existente) {
               existente.remove();
+              resumo.style.display = 'block';
               destaqueAtual = null;
               return;
             }
@@ -61,6 +66,7 @@
             `;
 
             li.appendChild(destaque);
+            resumo.style.display = 'none';
             destaqueAtual = li;
           });
 
@@ -94,14 +100,13 @@
             <span>|</span>
             <a href="favoritos.html" class="ativo">Favoritos</a>
             <span>|</span>
-            <a href="pag-ingredientes.html">ingredientes</a>
+            <a href="pag-ingredientes.html">Ingredientes</a>
             <div class="dropdown" id="menuDropdown">
               <div class="dropdown-content"></div>
             </div>
           </div>
         </nav>
       </div>
-
       <div class="search-container"></div>
     </header>
 
