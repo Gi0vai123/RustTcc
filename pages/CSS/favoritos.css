@@ -11,12 +11,13 @@ body {
 }
 
 .barra-lateral {
-  width: 58px;
-  height: 100vh;
-  background-color: #b9d49f;
-  position: fixed;
-  left: 0;
-  top: 0;
+    background-color: #C7DB9C;
+    width: 220px;
+    padding: 20px;
+    /* height: 100%; Removido para permitir o crescimento */
+    display: flex;
+    flex-direction: column; /* Organiza os botões verticalmente */
+    align-items: flex-start; /* Alinha os botões à esquerda */
 }
 
 .principal {

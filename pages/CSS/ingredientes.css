@@ -20,12 +20,15 @@ body {
 }
 
 .sidebar {
-    background-color: #b9d49f;
+    background-color: #C7DB9C;
     width: 220px;
     padding: 20px;
-    height: 100%;
-
+    /* height: 100%; Removido para permitir o crescimento */
+    display: flex;
+    flex-direction: column; /* Organiza os botões verticalmente */
+    align-items: flex-start; /* Alinha os botões à esquerda */
 }
+
 
 .sidebar h3 {
     font-size: 14px;
