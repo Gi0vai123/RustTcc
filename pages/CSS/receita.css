@@ -25,11 +25,13 @@ body {
     background-color: #C7DB9C;
     width: 220px;
     padding: 20px;
-    /* height: 100%; Removido para permitir o crescimento */
     display: flex;
-    flex-direction: column; /* Organiza os botões verticalmente */
-    align-items: flex-start; /* Alinha os botões à esquerda */
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100vh; /* Força ocupar a altura da viewport */
+    overflow-y: auto; /* Permite scroll se os botões ultrapassarem a altura */
 }
+
 
 .sidebar h3 {
     display: flex;
@@ -150,7 +152,7 @@ input {
     cursor: pointer;
     padding: 5px;
     width: 179px;
-    height: 35px;
+    height: 65px;
     border-radius: 8px;
     margin-bottom: 8px;
     display: block;
