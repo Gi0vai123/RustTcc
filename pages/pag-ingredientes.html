@@ -63,13 +63,15 @@
 
 
       </section>
-
+      <div class="loader"></div>
     </main>
   </div>
   <script src="js-pages/dropdown.js"></script>
   <script>
     // 1. Carrega os ingredientes via GET
     window.addEventListener("DOMContentLoaded", async () => {
+      const loader = document.querySelector(".loader");
+      loader.style.display = "none"; // Esconder loader
       try {
         const response = await fetch("http://127.0.0.1:8000/gerador");
         if (!response.ok) throw new Error("Erro ao carregar ingredientes");
@@ -119,6 +121,7 @@
       const lis = document.querySelectorAll(".ingredientes-lista li");
       const lista = Array.from(lis).map(li => li.firstChild.textContent.trim());
       try {
+        loader.style.display = "block"; // Mostrar loader
         const response = await fetch("http://127.0.0.1:8000/gerar", {
           credentials: "include",
           method: "POST",
@@ -127,6 +130,7 @@
         });
         if (!response.ok) throw new Error("Erro ao gerar receita");
         const receita = await response.json();
+        loader.style.display = "none"; // Esconder loader
         alert(`🍽️ Receita Gerada: ${receita.title}`);
       } catch (err) {
         console.error(err);
